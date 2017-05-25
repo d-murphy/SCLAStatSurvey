@@ -7,24 +7,40 @@
 
 library(shiny)
 
-shinyUI(fluidPage(
+shinyUI(
+  navbarPage("2012 SCLA Statistical Survey",
 
-  # Application title
-  titlePanel("Old Faithful Geyser Data"),
 
-  # Sidebar with a slider input for number of bins
-  sidebarLayout(
-    sidebarPanel(
-      sliderInput("bins",
-                  "Number of bins:",
-                  min = 1,
-                  max = 50,
-                  value = 30)
-    ),
+    tabPanel("Library Info",
+             sidebarLayout(
+                sidebarPanel(
 
-    # Show a plot of the generated distribution
-    mainPanel(
-      plotOutput("distPlot")
-    )
-  )
+                  selectInput("LibInfo", "Select a statistic:", 
+                      choices = c("Square Footage", "Meeting Room Capacity"))
+                          ),
+
+                mainPanel(
+                  plotOutput("LibInfoPlot")
+                  )
+              )
+        ),
+    tabPanel("Salary Info",
+             sidebarLayout(
+               sidebarPanel(
+                 
+                 selectInput("SalInfo", "Select a statistic:", 
+                             choices = c("Librarian III Salary", "Librarian III Wage"))
+               ),
+               
+               mainPanel(
+                 plotOutput("SalInfoPlot")
+               )
+             )
+
+        )
+
+
+
+
+
 ))

@@ -15,8 +15,16 @@ shinyUI(
              sidebarLayout(
                 sidebarPanel(
 
+                  #### left off here - need to get abstract function
+                  
                   selectInput("LibInfo", "Select a statistic:", 
-                      choices = c("Square Footage", "Meeting Room Capacity"))
+                      choices = c("Square Footage" = "SquareFeet", 
+                                  "Meeting Room Capacity" = "MeetingRoomCapacity", 
+                                  "Weekly Hours" = "WeeklyHours"
+                                  )), 
+                  
+                  br(), br(), br(), br(), br(),br(),br(),br(),br(),
+                  plotOutput("LibInfoDotPlot")
                           ),
 
                 mainPanel(

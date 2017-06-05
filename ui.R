@@ -40,7 +40,8 @@ shinyUI(
                              choices = c("Librarian Trainee Salary" = "LibTraineeSal",
                                          "Librarian I Salary" = "LibISal",
                                          "Librarian III Salary" = "LibIIISal")),
-                 br(), br(), br(), br(), br(), br(), br(), br(), br(),
+                 br(), br(), br(), br(), br(), br(), br(), br(),  
+                 p("Reds used to collect the lower ends of each range.  Greens collect the highs."),
                  plotOutput("SalInfoHist")
                ),
                

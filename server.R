@@ -75,7 +75,7 @@ shinyServer(function(input, output) {
       labs(x = LibSalxAxisName, 
            y = "# of Libraries")  + 
       scale_x_continuous(limits = c(40000,160000)) +
-      theme_hc()
+      theme_hc() 
   }
   
     

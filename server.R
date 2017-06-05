@@ -1,9 +1,4 @@
 
-# This is the server logic for a Shiny web application.
-# You can find out more about building applications with Shiny here:
-#
-# http://shiny.rstudio.com
-#
 
 library(shiny)
 library(readxl)
@@ -18,71 +13,95 @@ shinyServer(function(input, output) {
   LibInfoPlotFunc <- function(col){
     
     
-    xaxisName <- switch(input$LibInfo,
+    LibInfoxAxisName <- switch(input$LibInfo,
                     "SquareFeet" = "Library Square Footage",
                     "MeetingRoomCapacity" = "Library Meeting Room Capacity",
                     "WeeklyHours" = "Library Weekly Hours")
-    
-    
-    ggplot(aes(x = LibData[[col]], y=LibraryName), 
-           data = LibData %>% filter(is.na(col)==FALSE)) +
-      
+
+    ggplot(aes(x = LibData[[col]], y=LibraryName), data = LibData) +
     geom_point() + 
-    labs(x = xaxisName, 
-         y = "Library Name")  
+    labs(x = LibInfoxAxisName, 
+         y = "Library Name")  +
+    theme_hc()
+  }
+
+  LibInfoHistFunc <- function(col){
     
+    LibInfoxAxisName <- switch(input$LibInfo,
+                               "SquareFeet" = "Library Square Footage",
+                               "MeetingRoomCapacity" = "Library Meeting Room Capacity",
+                               "WeeklyHours" = "Library Weekly Hours")
+    ggplot(aes(x = LibData[[col]]), data = LibData) +
+      geom_histogram(fill = "dark green", alpha = .5) + 
+      labs(x = LibInfoxAxisName, 
+           y = "# of Libraries") +
+      theme_hc() 
   }
   
-  output$LibInfoPlot <- renderPlot({
+  LibSalPlotFunc <- function(col){
+
+    LibSalxAxisName <- switch(input$SalInfo, 
+                        "LibIIISal" = "Librarian III Salary", 
+                        "LibISal" = "Librarian I Salary",
+                        "LibTraineeSal" = "Librarian Trainee Salary")
+
+    LibSalLow <- paste0(input$SalInfo,"Low")
+    LibSalHigh <- paste0(input$SalInfo, "High")
+    
+    ggplot(aes(x = LibData[[LibSalLow]], y=LibraryName, xend = LibData[[LibSalHigh]], yend = LibraryName),
+           data = LibData) + 
+      geom_segment() +
+      geom_point(aes(x = LibData[[LibSalLow]])) + 
+      geom_point(aes(x = LibData[[LibSalHigh]])) +
+      labs(x = LibSalxAxisName, 
+           y = "Library Name") + 
+      scale_x_continuous(limits = c(40000,160000))+
+      theme_hc()
+  }
+  
+  LibSalHistFunc <- function(col){
+    
+    LibSalxAxisName <- switch(input$SalInfo, 
+                              "LibIIISal" = "Librarian III Salary", 
+                              "LibISal" = "Librarian I Salary",
+                              "LibTraineeSal" = "Librarian Trainee Salary")
+
+    LibSalLow <- paste0(input$SalInfo,"Low")
+    LibSalHigh <- paste0(input$SalInfo, "High")
+    
+    ggplot(data = LibData) +
+      geom_histogram(aes(x = LibData[[LibSalLow]]) , fill = "dark red", alpha = .5) +
+      geom_histogram(aes(x = LibData[[LibSalHigh]]), fill = "dark green", alpha = .5) + 
+      labs(x = LibSalxAxisName, 
+           y = "# of Libraries")  + 
+      scale_x_continuous(limits = c(40000,160000)) +
+      theme_hc()
+  }
+  
+    
+    output$LibInfoPlot <- renderPlot({
     
     LibInfoPlotFunc(input$LibInfo)
     
-  }, height = 725)
+    }, height = 725)
+  
+    output$LibInfoHist <- renderPlot({
 
-  output$LibInfoDotPlot <- renderPlot({
-      
-      if(input$LibInfo == "SquareFootage"){
-        
-        ggplot(aes(x = SquareFeet), data = (LibData %>% filter(is.na(SquareFeet)==FALSE)
-        )
-        ) + geom_histogram() +
-          labs(x = "Library Square Footage", 
-               y = "Count")
-        
-      } else if (input$LibInfo == "MeetingRoomCapacity"){
-        
-        ggplot(aes(x = MeetingRoomCapacity), data = (LibData %>% filter(is.na(MeetingRoomCapacity)==FALSE)
-        )
-        ) + geom_histogram() +
-          labs(x = "Meeting Room Capacity", 
-               y = "Count")
-        
-      } else if (input$LibInfo == "WeeklyHours"){
-        
-        ggplot(aes(x = WeeklyHours), data = (LibData %>% filter(is.na(WeeklyHours)==FALSE)
-        )
-        ) + geom_histogram() +
-          labs(x = "Weekly Hours", 
-               y = "Count")
-        
-      }
+      LibInfoHistFunc(input$LibInfo)
+            
     })
     
-  
     output$SalInfoPlot <- renderPlot({
     
-    if(input$SalInfo == "Librarian III Salary"){
+      LibSalPlotFunc(input$SalInfo)
       
-      ggplot(aes(x = LibrarianIIISalLow, y=LibraryName, xend = LibrarianIIISalHigh, yend = LibraryName),
-             data = (LibData %>% filter(is.na(LibrarianIIISalLow)==FALSE)
-      )
-      ) + geom_segment() +
-        labs(x = "Librarian III Salary", 
-             y = "Library Name") + 
-        scale_x_continuous(limits = c(40000,120000))
+    }, height = 725)
+    
+    output$SalInfoHist <- renderPlot({
       
-    } 
-  }, height = 725)
-  
+      LibSalHistFunc(input$SalInfo)
+      
+    })
+    
   
   })

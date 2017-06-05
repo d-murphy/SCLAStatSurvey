@@ -24,7 +24,7 @@ shinyUI(
                                   )), 
                   
                   br(), br(), br(), br(), br(),br(),br(),br(),br(),
-                  plotOutput("LibInfoDotPlot")
+                  plotOutput("LibInfoHist")
                           ),
 
                 mainPanel(
@@ -37,7 +37,11 @@ shinyUI(
                sidebarPanel(
                  
                  selectInput("SalInfo", "Select a statistic:", 
-                             choices = c("Librarian III Salary", "Librarian III Wage"))
+                             choices = c("Librarian Trainee Salary" = "LibTraineeSal",
+                                         "Librarian I Salary" = "LibISal",
+                                         "Librarian III Salary" = "LibIIISal")),
+                 br(), br(), br(), br(), br(), br(), br(), br(), br(),
+                 plotOutput("SalInfoHist")
                ),
                
                mainPanel(

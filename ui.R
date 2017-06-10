@@ -6,9 +6,10 @@
 #
 
 library(shiny)
+library(shinythemes)
 
 shinyUI(
-  navbarPage("2012 SCLA Statistical Survey",
+  navbarPage("2012 SCLA Statistical Survey", theme = shinytheme("sandstone"),
 
 
     tabPanel("Library Info",

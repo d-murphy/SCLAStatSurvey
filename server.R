@@ -16,7 +16,10 @@ shinyServer(function(input, output) {
     LibInfoxAxisName <- switch(input$LibInfo,
                     "SquareFeet" = "Library Square Footage",
                     "MeetingRoomCapacity" = "Library Meeting Room Capacity",
-                    "WeeklyHours" = "Library Weekly Hours")
+                    "WeeklyHours" = "Library Weekly Hours",
+                    "NewFictionLoan" = "New Fiction Loan Period",
+                    "NewNonFicLoan" = "New Non-Fiction Loan Period",
+                    "OtherBooksLoan" = "Other Books Loan Period")
 
     ggplot(aes(x = LibData[[col]], y=LibraryName), data = LibData) +
     geom_point() + 
@@ -30,7 +33,10 @@ shinyServer(function(input, output) {
     LibInfoxAxisName <- switch(input$LibInfo,
                                "SquareFeet" = "Library Square Footage",
                                "MeetingRoomCapacity" = "Library Meeting Room Capacity",
-                               "WeeklyHours" = "Library Weekly Hours")
+                               "WeeklyHours" = "Library Weekly Hours",
+                               "NewFictionLoan" = "New Fiction Loan Period",
+                               "NewNonFicLoan" = "New Non-Fiction Loan Period",
+                               "OtherBooksLoan" = "Other Books Loan Period")
     ggplot(aes(x = LibData[[col]]), data = LibData) +
       geom_histogram(fill = "dark green", alpha = .5) + 
       labs(x = LibInfoxAxisName, 
@@ -43,8 +49,15 @@ shinyServer(function(input, output) {
     LibSalxAxisName <- switch(input$SalInfo, 
                         "LibIIISal" = "Librarian III Salary", 
                         "LibISal" = "Librarian I Salary",
-                        "LibTraineeSal" = "Librarian Trainee Salary")
-
+                        "LibTraineeSal" = "Librarian Trainee Salary",
+                        "LibIISal" = "Librarian II Salary",
+                        "LibIVSal" = "Librarian IV Salary",
+                        "ClerkSal" = "Cleark Salary",
+                        "SenClerkSal" = "Senior Clerk Salary",
+                        "LibDirSal" = "Library Director Salary")
+   
+    
+   
     LibSalLow <- paste0(input$SalInfo,"Low")
     LibSalHigh <- paste0(input$SalInfo, "High")
     
@@ -55,8 +68,9 @@ shinyServer(function(input, output) {
       geom_point(aes(x = LibData[[LibSalHigh]])) +
       labs(x = LibSalxAxisName, 
            y = "Library Name") + 
-      scale_x_continuous(limits = c(40000,160000))+
-      theme_hc()
+      scale_x_continuous(limits = c(20000,160000))+
+      theme_hc() + 
+      ggtitle("")
   }
   
   LibSalHistFunc <- function(col){
@@ -64,7 +78,13 @@ shinyServer(function(input, output) {
     LibSalxAxisName <- switch(input$SalInfo, 
                               "LibIIISal" = "Librarian III Salary", 
                               "LibISal" = "Librarian I Salary",
-                              "LibTraineeSal" = "Librarian Trainee Salary")
+                              "LibTraineeSal" = "Librarian Trainee Salary",
+                              "LibIISal" = "Librarian II Salary",
+                              "LibIVSal" = "Librarian IV Salary",
+                              "ClerkSal" = "Cleark Salary",
+                              "SenClerkSal" = "Senior Clerk Salary",
+                              "LibDirSal" = "Library Director Salary")
+    
 
     LibSalLow <- paste0(input$SalInfo,"Low")
     LibSalHigh <- paste0(input$SalInfo, "High")
@@ -74,7 +94,7 @@ shinyServer(function(input, output) {
       geom_histogram(aes(x = LibData[[LibSalHigh]]), fill = "dark green", alpha = .5) + 
       labs(x = LibSalxAxisName, 
            y = "# of Libraries")  + 
-      scale_x_continuous(limits = c(40000,160000)) +
+      scale_x_continuous(limits = c(20000,160000)) +
       theme_hc() 
   }
   

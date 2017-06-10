@@ -20,7 +20,10 @@ shinyUI(
                   selectInput("LibInfo", "Select a statistic:", 
                       choices = c("Square Footage" = "SquareFeet", 
                                   "Meeting Room Capacity" = "MeetingRoomCapacity", 
-                                  "Weekly Hours" = "WeeklyHours"
+                                  "Weekly Hours" = "WeeklyHours",
+                                  "New Fiction Loan Period" = "NewFictionLoan",
+                                  "New Non-Fiction Loan Period" = "NewNonFicLoan",
+                                  "Other Books Loan Period" = "OtherBooksLoan"
                                   )), 
                   
                   br(), br(), br(), br(), br(),br(),br(),br(),br(),
@@ -37,9 +40,15 @@ shinyUI(
                sidebarPanel(
                  
                  selectInput("SalInfo", "Select a statistic:", 
-                             choices = c("Librarian Trainee Salary" = "LibTraineeSal",
+                             choices = c("Clerk Salary" = "ClerkSal",
+                                         "Senior Clerk Salary" = "SenClerkSal",
+                                         "Librarian Trainee Salary" = "LibTraineeSal",
                                          "Librarian I Salary" = "LibISal",
-                                         "Librarian III Salary" = "LibIIISal")),
+                                         "Librarian II Salary" = "LibIISal",
+                                         "Librarian III Salary" = "LibIIISal",
+                                         "Librarian IV Salary" = "LibIVSal",
+                                         "Library Director Salary" = "LibDirSal"
+                                         )),
                  br(), br(), br(), br(), br(), br(), br(), br(),  
                  p("Reds used to collect the lower ends of each range.  Greens collect the highs."),
                  plotOutput("SalInfoHist")

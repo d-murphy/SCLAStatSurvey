@@ -14,16 +14,14 @@ shinyServer(function(input, output) {
     
     
     LibInfoxAxisName <- switch(input$LibInfo,
-                    "SquareFeet" = "Library Square Footage",
-                    "MeetingRoomCapacity" = "Library Meeting Room Capacity",
-                    "WeeklyHours" = "Library Weekly Hours",
-                    "NewFictionLoan" = "New Fiction Loan Period",
-                    "NewNonFicLoan" = "New Non-Fiction Loan Period",
-                    "OtherBooksLoan" = "Other Books Loan Period")
-
+                               "SquareFeet" = "Square Footage", 
+                               "MeetingRoomCapacity" = "Meeting Room Capacity", 
+                               "YearlyOpenHours" = "Yearly Open Hours",
+                               "WeeklyOpenHours" = "Weekly Hours")
+                    
     ggplot(aes(x = LibData[[col]], y=LibraryName), data = LibData) +
     geom_point() + 
-    labs(x = LibInfoxAxisName, 
+    labs(x =  LibInfoxAxisName, 
          y = "Library Name")  +
     theme_hc()
   }
@@ -31,12 +29,10 @@ shinyServer(function(input, output) {
   LibInfoHistFunc <- function(col){
     
     LibInfoxAxisName <- switch(input$LibInfo,
-                               "SquareFeet" = "Library Square Footage",
-                               "MeetingRoomCapacity" = "Library Meeting Room Capacity",
-                               "WeeklyHours" = "Library Weekly Hours",
-                               "NewFictionLoan" = "New Fiction Loan Period",
-                               "NewNonFicLoan" = "New Non-Fiction Loan Period",
-                               "OtherBooksLoan" = "Other Books Loan Period")
+                               "SquareFeet" = "Square Footage", 
+                               "MeetingRoomCapacity" = "Meeting Room Capacity", 
+                               "YearlyOpenHours" = "Yearly Open Hours",
+                               "WeeklyOpenHours" = "Weekly Hours")
     ggplot(aes(x = LibData[[col]]), data = LibData) +
       geom_histogram(fill = "dark green", alpha = .5) + 
       labs(x = LibInfoxAxisName, 

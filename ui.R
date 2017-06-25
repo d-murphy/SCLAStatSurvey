@@ -9,22 +9,19 @@ library(shiny)
 library(shinythemes)
 
 shinyUI(
-  navbarPage("2012 SCLA Statistical Survey", theme = shinytheme("sandstone"),
+  navbarPage("2015 SCLA Statistical Survey", theme = shinytheme("sandstone"),
 
 
     tabPanel("Library Info",
              sidebarLayout(
                 sidebarPanel(
 
-                  #### left off here - need to get abstract function
-                  
                   selectInput("LibInfo", "Select a statistic:", 
-                      choices = c("Square Footage" = "SquareFeet", 
+                      choices = c(
+                                  "Square Footage" = "SquareFeet", 
                                   "Meeting Room Capacity" = "MeetingRoomCapacity", 
-                                  "Weekly Hours" = "WeeklyHours",
-                                  "New Fiction Loan Period" = "NewFictionLoan",
-                                  "New Non-Fiction Loan Period" = "NewNonFicLoan",
-                                  "Other Books Loan Period" = "OtherBooksLoan"
+                                  "Yearly Open Hours" = "YearlyOpenHours",
+                                  "Weekly Hours" = "WeeklyOpenHours"
                                   )), 
                   
                   br(), br(), br(), br(), br(),br(),br(),br(),br(),
@@ -60,7 +57,14 @@ shinyUI(
                )
              )
 
-        )
+        ),
+    tabPanel("About the Project", 
+             
+             p("The Suffolk County Library Association Statistical Survey Committee is chaired by Peter Ward of the Brentwood Library.  
+               This web app was created by Dan Murphy of the West Islip Library.  Some of the data captured by the committee is not
+               accessble through this site.  Contact Peter for any additional information.")
+             
+             )
 
 
 

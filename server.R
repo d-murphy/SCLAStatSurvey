@@ -39,7 +39,79 @@ shinyServer(function(input, output) {
            y = "# of Libraries") +
       theme_hc() 
   }
+
+  StaffCtPlotFunc <- function(col){
+    
+    
+    StaffCtAxisName <- switch(input$StaffCt,
+                              "Librarians_FT" = "Librarian FT",
+                              "Librarians_PT" = "Librarian PT",
+                              "Administration_FT" = "Administration FT",
+                              "Administration _PT" = "Administration PT",
+                              "AdministrativeAssistants_FT" = "Admin Assistant FT",
+                              "AdministrativeAssistants_PT" = "Admin Assistant PT",
+                              "BuildingGrounds_FT" = "Building and Grounds FT",
+                              "BuildingGrounds_PT" = "Building and Grounds PT",
+                              "Circulation_FT" = "Circulation FT",
+                              "Circulation_PT" = "Circulation PT",
+                              "Clerks_FT" = "Clerks FT",
+                              "Clerks_PT" = "Clerks PT",
+                              "CommunityServices_FT" = "Community Services FT",
+                              "CommunityServices_PT" = "Community Services PT",
+                              "InformationTechnology_FT" = "IT FT",
+                              "InformationTechnology_PT" = "IT PT",
+                              "Pages_FT" = "Pages FT",
+                              "Pages_PT" = "Pages PT",
+                              "Security_FT" = "Security FT",
+                              "Security_PT" = "Security PT" 
+                              )
+    
+    ggplot(aes(x = LibData[[col]], y=LibraryName), data = LibData) +
+      geom_point() + 
+      labs(x =  StaffCtAxisName, 
+           y = "Library Name")  +
+      theme_hc()
+  }
   
+  StaffCtHistFunc <- function(col){
+    
+    StaffCtAxisName <- switch(input$LibInfo,
+                              "Librarians_FT" = "Librarian FT",
+                              "Librarians_PT" = "Librarian PT",
+                              "Administration_FT" = "Administration FT",
+                              "Administration _PT" = "Administration PT",
+                              "AdministrativeAssistants_FT" = "Admin Assistant FT",
+                              "AdministrativeAssistants_PT" = "Admin Assistant PT",
+                              "BuildingGrounds_FT" = "Building and Grounds FT",
+                              "BuildingGrounds_PT" = "Building and Grounds PT",
+                              "Circulation_FT" = "Circulation FT",
+                              "Circulation_PT" = "Circulation PT",
+                              "Clerks_FT" = "Clerks FT",
+                              "Clerks_PT" = "Clerks PT",
+                              "CommunityServices_FT" = "Community Services FT",
+                              "CommunityServices_PT" = "Community Services PT",
+                              "InformationTechnology_FT" = "IT FT",
+                              "InformationTechnology_PT" = "IT PT",
+                              "Pages_FT" = "Pages FT",
+                              "Pages_PT" = "Pages PT",
+                              "Security_FT" = "Security FT",
+                              "Security_PT" = "Security PT" 
+    )
+    ggplot(aes(x = LibData[[col]]), data = LibData) +
+      geom_histogram(fill = "dark green", alpha = .5) + 
+      labs(x = StaffCtAxisName, 
+           y = "# of Libraries") +
+      theme_hc() 
+  }
+  
+  
+  
+  
+  
+  
+  
+  
+    
   LibSalPlotFunc <- function(col){
 
     LibSalxAxisName <- switch(input$SalInfo, 
@@ -99,19 +171,32 @@ shinyServer(function(input, output) {
     
     LibInfoPlotFunc(input$LibInfo)
     
-    }, height = 725)
+    }, height = 650)
   
     output$LibInfoHist <- renderPlot({
 
       LibInfoHistFunc(input$LibInfo)
             
     })
+
+    output$StaffCtPlot <- renderPlot({
+      
+      StaffCtPlotFunc(input$StaffCt)
+      
+    }, height = 650)
     
+    output$StaffCtHist <- renderPlot({
+      
+      StaffCtHistFunc(input$StaffCt)
+      
+    })
+    
+              
     output$SalInfoPlot <- renderPlot({
     
       LibSalPlotFunc(input$SalInfo)
       
-    }, height = 725)
+    }, height = 650)
     
     output$SalInfoHist <- renderPlot({
       
@@ -119,5 +204,4 @@ shinyServer(function(input, output) {
       
     })
     
-  
-  })
+})  

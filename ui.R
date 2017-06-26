@@ -33,7 +33,47 @@ shinyUI(
                   )
               )
         ),
-    tabPanel("Salary Info",
+
+    tabPanel("Staff Counts",
+             sidebarLayout(
+               sidebarPanel(
+                 
+                 selectInput("StaffCt", "Select a role:", 
+                             choices = c("Librarian FT" = "Librarians_FT",
+                                         "Librarian PT" = "Librarians_PT",
+                                         "Administration FT" = "Administration_FT",
+                                         "Administration PT" = "Administration _PT",
+                                         "Admin Assistant FT" = "AdministrativeAssistants_FT",
+                                         "Admin Assistant PT" = "AdministrativeAssistants_PT",
+                                         "Building and Grounds FT" = "BuildingGrounds_FT",
+                                         "Building and Grounds PT" = "BuildingGrounds_PT",
+                                         "Circulation FT" = "Circulation_FT",
+                                         "Circulation PT" = "Circulation_PT",
+                                         "Clerks FT" = "Clerks_FT",
+                                         "Clerks PT" = "Clerks_PT",
+                                         "Community Services FT" = "CommunityServices_FT",
+                                         "Community Services PT" = "CommunityServices_PT",
+                                         "IT FT" = "InformationTechnology_FT",
+                                         "IT PT" = "InformationTechnology_PT",
+                                         "Pages FT" = "Pages_FT",
+                                         "Pages PT" = "Pages_PT",
+                                         "Security FT" = "Security_FT",
+                                         "Security PT" = "Security_PT"
+                                         
+                             )),
+                 br(), br(), br(), br(), br(), br(), br(), br(), br(),  
+                 plotOutput("StaffCtHist")
+               ),
+               
+               mainPanel(
+                 plotOutput("StaffCtPlot")
+               )
+             )
+             
+    ),
+    
+    
+            tabPanel("Salary Info",
              sidebarLayout(
                sidebarPanel(
                  

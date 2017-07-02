@@ -7,6 +7,7 @@ library(dplyr)
 library(ggthemes)
 
 LibData <- read_excel("SCLASurvey.xlsx")
+LibData <- LibData[1:29,]
 
 shinyServer(function(input, output) {
 
@@ -17,7 +18,8 @@ shinyServer(function(input, output) {
                                "SquareFeet" = "Square Footage", 
                                "MeetingRoomCapacity" = "Meeting Room Capacity", 
                                "YearlyOpenHours" = "Yearly Open Hours",
-                               "WeeklyOpenHours" = "Weekly Hours")
+                               "WeeklyOpenHours" = "Weekly Hours", 
+                               "YearEstablished" = "YearEstablished")
                     
     ggplot(aes(x = LibData[[col]], y=LibraryName), data = LibData) +
     geom_point() + 
@@ -32,7 +34,8 @@ shinyServer(function(input, output) {
                                "SquareFeet" = "Square Footage", 
                                "MeetingRoomCapacity" = "Meeting Room Capacity", 
                                "YearlyOpenHours" = "Yearly Open Hours",
-                               "WeeklyOpenHours" = "Weekly Hours")
+                               "WeeklyOpenHours" = "Weekly Hours", 
+                               "YearEstablished" = "YearEstablished")
     ggplot(aes(x = LibData[[col]]), data = LibData) +
       geom_histogram(fill = "dark green", alpha = .5) + 
       labs(x = LibInfoxAxisName, 
@@ -104,14 +107,82 @@ shinyServer(function(input, output) {
       theme_hc() 
   }
   
-  
-  
-  
-  
-  
-  
-  
+  LoanPerPlotFunc <- function(col){
     
+    
+    LoanPerAxisName <- switch(input$LoanPer,
+                              "New_Books_Fiction" = "New Books - Fiction",
+                              "New_Books_Non-Fiction" = "New Books - Non-fiction",
+                              "Regular_Books_Fiction" = "Regular Books - Fiction",
+                              "Regular_Books_Non-Fiction" = "Regular Books - Non-fiction", 
+                              "New_Audiobooks_Fiction" = "New Audiobooks - Fiction",
+                              "New_Audiobooks_Non-Fiction" = "New Audiobooks - Non-fiction",
+                              "Regular_Audiobook_Fiction" = "Regular Audiobooks - Fiction",
+                              "Regular_Audiobooks_Non-Fiction" = "Regular Audiobooks - Non-fiction",
+                              "New_Digital_Audio_Books_Fiction" = "New Digital Audio Books",
+                              "Regular_Digital_Audio_Books_Fiction" = "Regular Digital Audio Books", 
+                              "New_DVDs-Fiction" = "New DVDs - Fiction",
+                              "New_DVDs_Non-Fiction" = "New DVDs - Non-fiction",
+                              "Regular_DVDs_Fiction" = "Regular DVDs - Fiction", 
+                              "Regular_DVDs_Non-Fiction" = "Regular DVDs - Non-fiction", 
+                              "New_Periodicals_Fiction" = "New Periodicals - Fiction",
+                              "New_Periodicals_Non-Fiction" = "New Periodicals - Non-fiction", 
+                              "Regular_ Periodicals_Fiction" = "Regular Periodicals - Fiction", 
+                              "Regular_Periodicals_Non-Fiction" = "Regular Periodicals - Non-fiction",
+                              "New_Music_Fiction" = "New Music", 
+                              "Regular_Music_Fiction" = "Regular Music",
+                              "New_Software_Fiction" = "New Software", 
+                              "Regular_Software_Fiction" = "Regular Software", 
+                              "New_Videogames_Fiction" = "New Videogames", 
+                              "Regular_Videogames_Fiction" = "Regular Videogames"
+                              
+    )
+    
+    ggplot(aes(x = LibData[[col]], y=LibraryName), data = LibData) +
+      geom_point() + 
+      labs(x =  LoanPerAxisName, 
+           y = "Library Name")  +
+      theme_hc()
+  }
+  
+  LoanPerHistFunc <- function(col){
+    
+    LoanPerAxisName <- switch(input$LoanPer,
+                              "New_Books_Fiction" = "New Books - Fiction",
+                              "New_Books_Non-Fiction" = "New Books - Non-fiction",
+                              "Regular_Books_Fiction" = "Regular Books - Fiction",
+                              "Regular_Books_Non-Fiction" = "Regular Books - Non-fiction", 
+                              "New_Audiobooks_Fiction" = "New Audiobooks - Fiction",
+                              "New_Audiobooks_Non-Fiction" = "New Audiobooks - Non-fiction",
+                              "Regular_Audiobook_Fiction" = "Regular Audiobooks - Fiction",
+                              "Regular_Audiobooks_Non-Fiction" = "Regular Audiobooks - Non-fiction",
+                              "New_Digital_Audio_Books_Fiction" = "New Digital Audio Books",
+                              "Regular_Digital_Audio_Books_Fiction" = "Regular Digital Audio Books", 
+                              "New_DVDs-Fiction" = "New DVDs - Fiction",
+                              "New_DVDs_Non-Fiction" = "New DVDs - Non-fiction",
+                              "Regular_DVDs_Fiction" = "Regular DVDs - Fiction", 
+                              "Regular_DVDs_Non-Fiction" = "Regular DVDs - Non-fiction", 
+                              "New_Periodicals_Fiction" = "New Periodicals - Fiction",
+                              "New_Periodicals_Non-Fiction" = "New Periodicals - Non-fiction", 
+                              "Regular_ Periodicals_Fiction" = "Regular Periodicals - Fiction", 
+                              "Regular_Periodicals_Non-Fiction" = "Regular Periodicals - Non-fiction",
+                              "New_Music_Fiction" = "New Music", 
+                              "Regular_Music_Fiction" = "Regular Music",
+                              "New_Software_Fiction" = "New Software", 
+                              "Regular_Software_Fiction" = "Regular Software", 
+                              "New_Videogames_Fiction" = "New Videogames", 
+                              "Regular_Videogames_Fiction" = "Regular Videogames"
+                              
+    )
+    
+    ggplot(aes(x = LibData[[col]]), data = LibData) +
+      geom_histogram(fill = "dark green", alpha = .5) + 
+      labs(x = LoanPerAxisName, 
+           y = "# of Libraries") +
+      theme_hc() 
+  }
+  
+  
   LibSalPlotFunc <- function(col){
 
     LibSalxAxisName <- switch(input$SalInfo, 
@@ -166,7 +237,6 @@ shinyServer(function(input, output) {
       theme_hc() 
   }
   
-    
     output$LibInfoPlot <- renderPlot({
     
     LibInfoPlotFunc(input$LibInfo)
@@ -185,13 +255,27 @@ shinyServer(function(input, output) {
       
     }, height = 650)
     
+  
     output$StaffCtHist <- renderPlot({
       
       StaffCtHistFunc(input$StaffCt)
       
     })
     
-              
+    output$LoanPerHist <- renderPlot({
+      
+      LoanPerHistFunc(input$LoanPer)
+      
+    })
+    
+    output$LoanPerPlot <- renderPlot({
+      
+      LoanPerPlotFunc(input$LoanPer)
+      
+    }, height = 650)
+    
+    
+                  
     output$SalInfoPlot <- renderPlot({
     
       LibSalPlotFunc(input$SalInfo)

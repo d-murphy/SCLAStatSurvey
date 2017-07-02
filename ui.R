@@ -21,7 +21,8 @@ shinyUI(
                                   "Square Footage" = "SquareFeet", 
                                   "Meeting Room Capacity" = "MeetingRoomCapacity", 
                                   "Yearly Open Hours" = "YearlyOpenHours",
-                                  "Weekly Hours" = "WeeklyOpenHours"
+                                  "Weekly Hours" = "WeeklyOpenHours",
+                                  "Year Established" = "YearEstablished"
                                   )), 
                   
                   br(), br(), br(), br(), br(),br(),br(),br(),br(),
@@ -71,6 +72,45 @@ shinyUI(
              )
              
     ),
+    
+    tabPanel("Loan Periods", 
+             sidebarLayout(
+               sidebarPanel(
+                 selectInput("LoanPer", "Select a material type:",
+                             choices = c("New Books - Fiction" = "New_Books_Fiction",
+                                         "New Books - Non-fiction" = "New_Books_Non-Fiction",
+                                         "Regular Books - Fiction" = "Regular_Books_Fiction",
+                                         "Regular Books - Non-fiction" = "Regular_Books_Non-Fiction", 
+                                         "New Audiobooks - Fiction" = "New_Audiobooks_Fiction",
+                                         "New Audiobooks - Non-fiction" = "New_Audiobooks_Non-Fiction",
+                                         "Regular Audiobooks - Fiction" = "Regular_Audiobook_Fiction",
+                                         "Regular Audiobooks - Non-fiction" = "Regular_Audiobooks_Non-Fiction",
+                                         "New Digital Audio Books" = "New_Digital_Audio_Books_Fiction",
+                                         "Regular Digital Audio Books" = "Regular_Digital_Audio_Books_Fiction", 
+                                         "New DVDs - Fiction" = "New_DVDs-Fiction",
+                                         "New DVDs - Non-fiction" = "New_DVDs_Non-Fiction",
+                                         "Regular DVDs - Fiction" = "Regular_DVDs_Fiction", 
+                                         "Regular DVDs - Non-fiction" = "Regular_DVDs_Non-Fiction", 
+                                         "New Periodicals - Fiction" = "New_Periodicals_Fiction",
+                                         "New Periodicals - Non-fiction" = "New_Periodicals_Non-Fiction", 
+                                         "Regular Periodicals - Fiction" = "Regular_ Periodicals_Fiction", 
+                                         "Regular Periodicals - Non-fiction" = "Regular_Periodicals_Non-Fiction",
+                                         "New Music" = "New_Music_Fiction", 
+                                         "Regular Music" = "Regular_Music_Fiction",
+                                         "New Software" = "New_Software_Fiction", 
+                                         "Regular Software" = "Regular_Software_Fiction", 
+                                         "New Videogames" = "New_Videogames_Fiction", 
+                                         "Regular Videogames" = "Regular_Videogames_Fiction")),
+                 br(), br(), br(), br(), br(), br(), br(), br(), br(),  
+                 plotOutput("LoanPerHist")
+               ),
+               
+               mainPanel(
+                 plotOutput("LoanPerPlot")
+               )
+             )
+             
+             ),
     
     
             tabPanel("Salary Info",

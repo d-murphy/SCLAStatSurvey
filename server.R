@@ -5,6 +5,7 @@ library(readxl)
 library(ggplot2)
 library(dplyr)
 library(ggthemes)
+library(scales)
 
 LibData <- read_excel("SCLASurvey.xlsx")
 LibData <- LibData[1:29,]
@@ -25,7 +26,8 @@ shinyServer(function(input, output) {
     geom_point() + 
     labs(x =  LibInfoxAxisName, 
          y = "Library Name")  +
-    theme_hc()
+    theme_hc() + 
+    scale_x_continuous(breaks = pretty_breaks())
   }
 
   LibInfoHistFunc <- function(col){
@@ -37,10 +39,11 @@ shinyServer(function(input, output) {
                                "WeeklyOpenHours" = "Weekly Hours", 
                                "YearEstablished" = "YearEstablished")
     ggplot(aes(x = LibData[[col]]), data = LibData) +
-      geom_histogram(fill = "dark green", alpha = .5) + 
+      geom_histogram(fill = "dark green", alpha = .5, bins = 15) + 
       labs(x = LibInfoxAxisName, 
            y = "# of Libraries") +
-      theme_hc() 
+      theme_hc() + 
+      scale_x_continuous(breaks = pretty_breaks())
   }
 
   StaffCtPlotFunc <- function(col){
@@ -73,7 +76,8 @@ shinyServer(function(input, output) {
       geom_point() + 
       labs(x =  StaffCtAxisName, 
            y = "Library Name")  +
-      theme_hc()
+      theme_hc() + 
+      scale_x_continuous(breaks = pretty_breaks())
   }
   
   StaffCtHistFunc <- function(col){
@@ -101,10 +105,11 @@ shinyServer(function(input, output) {
                               "Security_PT" = "Security PT" 
     )
     ggplot(aes(x = LibData[[col]]), data = LibData) +
-      geom_histogram(fill = "dark green", alpha = .5) + 
+      geom_histogram(fill = "dark green", alpha = .5, bins = 15) + 
       labs(x = StaffCtAxisName, 
            y = "# of Libraries") +
-      theme_hc() 
+      theme_hc() + 
+      scale_x_continuous(breaks = pretty_breaks())
   }
   
   LoanPerPlotFunc <- function(col){
@@ -127,7 +132,7 @@ shinyServer(function(input, output) {
                               "Regular_DVDs_Non-Fiction" = "Regular DVDs - Non-fiction", 
                               "New_Periodicals_Fiction" = "New Periodicals - Fiction",
                               "New_Periodicals_Non-Fiction" = "New Periodicals - Non-fiction", 
-                              "Regular_ Periodicals_Fiction" = "Regular Periodicals - Fiction", 
+                              "Regular_Periodicals_Fiction" = "Regular Periodicals - Fiction", 
                               "Regular_Periodicals_Non-Fiction" = "Regular Periodicals - Non-fiction",
                               "New_Music_Fiction" = "New Music", 
                               "Regular_Music_Fiction" = "Regular Music",
@@ -142,7 +147,8 @@ shinyServer(function(input, output) {
       geom_point() + 
       labs(x =  LoanPerAxisName, 
            y = "Library Name")  +
-      theme_hc()
+      theme_hc() + 
+      scale_x_continuous(breaks = pretty_breaks())
   }
   
   LoanPerHistFunc <- function(col){
@@ -164,7 +170,7 @@ shinyServer(function(input, output) {
                               "Regular_DVDs_Non-Fiction" = "Regular DVDs - Non-fiction", 
                               "New_Periodicals_Fiction" = "New Periodicals - Fiction",
                               "New_Periodicals_Non-Fiction" = "New Periodicals - Non-fiction", 
-                              "Regular_ Periodicals_Fiction" = "Regular Periodicals - Fiction", 
+                              "Regular_Periodicals_Fiction" = "Regular Periodicals - Fiction", 
                               "Regular_Periodicals_Non-Fiction" = "Regular Periodicals - Non-fiction",
                               "New_Music_Fiction" = "New Music", 
                               "Regular_Music_Fiction" = "Regular Music",
@@ -176,10 +182,11 @@ shinyServer(function(input, output) {
     )
     
     ggplot(aes(x = LibData[[col]]), data = LibData) +
-      geom_histogram(fill = "dark green", alpha = .5) + 
+      geom_histogram(fill = "dark green", alpha = .5, bins = 15) + 
       labs(x = LoanPerAxisName, 
            y = "# of Libraries") +
-      theme_hc() 
+      theme_hc() + 
+      scale_x_continuous(breaks = pretty_breaks())
   }
   
   
@@ -208,8 +215,9 @@ shinyServer(function(input, output) {
       labs(x = LibSalxAxisName, 
            y = "Library Name") + 
       scale_x_continuous(limits = c(20000,160000))+
-      theme_hc() + 
-      ggtitle("")
+      theme_hc()  + 
+      ggtitle("") + 
+      scale_x_continuous(breaks = pretty_breaks())
   }
   
   LibSalHistFunc <- function(col){
@@ -229,8 +237,8 @@ shinyServer(function(input, output) {
     LibSalHigh <- paste0(input$SalInfo, "High")
     
     ggplot(data = LibData) +
-      geom_histogram(aes(x = LibData[[LibSalLow]]) , fill = "dark red", alpha = .5) +
-      geom_histogram(aes(x = LibData[[LibSalHigh]]), fill = "dark green", alpha = .5) + 
+      geom_histogram(aes(x = LibData[[LibSalLow]]) , fill = "dark red", alpha = .5, bins = 15) +
+      geom_histogram(aes(x = LibData[[LibSalHigh]]), fill = "dark green", alpha = .5, bins = 15) + 
       labs(x = LibSalxAxisName, 
            y = "# of Libraries")  + 
       scale_x_continuous(limits = c(20000,160000)) +

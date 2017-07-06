@@ -93,7 +93,7 @@ shinyUI(
                                          "Regular DVDs - Non-fiction" = "Regular_DVDs_Non-Fiction", 
                                          "New Periodicals - Fiction" = "New_Periodicals_Fiction",
                                          "New Periodicals - Non-fiction" = "New_Periodicals_Non-Fiction", 
-                                         "Regular Periodicals - Fiction" = "Regular_ Periodicals_Fiction", 
+                                         "Regular Periodicals - Fiction" = "Regular_Periodicals_Fiction", 
                                          "Regular Periodicals - Non-fiction" = "Regular_Periodicals_Non-Fiction",
                                          "New Music" = "New_Music_Fiction", 
                                          "Regular Music" = "Regular_Music_Fiction",

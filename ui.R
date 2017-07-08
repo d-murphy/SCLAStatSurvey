@@ -15,14 +15,15 @@ shinyUI(
     tabPanel("Library Info",
              sidebarLayout(
                 sidebarPanel(
-
+                  
                   selectInput("LibInfo", "Select a statistic:", 
                       choices = c(
-                                  "Square Footage" = "SquareFeet", 
-                                  "Meeting Room Capacity" = "MeetingRoomCapacity", 
-                                  "Yearly Open Hours" = "YearlyOpenHours",
-                                  "Weekly Hours" = "WeeklyOpenHours",
-                                  "Year Established" = "YearEstablished"
+                                  "Square Footage" = "Info_Square_Feet", 
+                                  "Meeting Room Capacity" = "Info_Meeting_Room_Capacity", 
+                                  "Yearly Open Hours" = "Info_Yearly_Open_Hours",
+                                  "Weekly Hours" = "Info_Weekly_Open_Hours",
+                                  "Year Established" = "Info_Year_Established
+"
                                   )), 
                   
                   br(), br(), br(), br(), br(),br(),br(),br(),br(),
@@ -40,28 +41,19 @@ shinyUI(
                sidebarPanel(
                  
                  selectInput("StaffCt", "Select a role:", 
-                             choices = c("Librarian FT" = "Librarians_FT",
-                                         "Librarian PT" = "Librarians_PT",
-                                         "Administration FT" = "Administration_FT",
-                                         "Administration PT" = "Administration _PT",
-                                         "Admin Assistant FT" = "AdministrativeAssistants_FT",
-                                         "Admin Assistant PT" = "AdministrativeAssistants_PT",
-                                         "Building and Grounds FT" = "BuildingGrounds_FT",
-                                         "Building and Grounds PT" = "BuildingGrounds_PT",
-                                         "Circulation FT" = "Circulation_FT",
-                                         "Circulation PT" = "Circulation_PT",
-                                         "Clerks FT" = "Clerks_FT",
-                                         "Clerks PT" = "Clerks_PT",
-                                         "Community Services FT" = "CommunityServices_FT",
-                                         "Community Services PT" = "CommunityServices_PT",
-                                         "IT FT" = "InformationTechnology_FT",
-                                         "IT PT" = "InformationTechnology_PT",
-                                         "Pages FT" = "Pages_FT",
-                                         "Pages PT" = "Pages_PT",
-                                         "Security FT" = "Security_FT",
-                                         "Security PT" = "Security_PT"
+                             choices = c("Librarians" = "Librarians",
+                                         "Administration" = "Administration",
+                                         "Administrative Assistants" = "Administrative_Assistants",
+                                         "Building and Grounds" = "Building_and_Grounds",
+                                         "Circulation" = "Circulation",
+                                         "Clerks" = "Clerks",
+                                         "Community Services" = "Community_Services",
+                                         "Information Technology" = "Information_Technology",
+                                         "Pages" = "Pages", 
+                                         "Security" = "Security"
                                          
                              )),
+                 checkboxInput("StaffCtFT", "FT or PT", value = TRUE),
                  br(), br(), br(), br(), br(), br(), br(), br(), br(),  
                  plotOutput("StaffCtHist")
                ),
@@ -77,30 +69,18 @@ shinyUI(
              sidebarLayout(
                sidebarPanel(
                  selectInput("LoanPer", "Select a material type:",
-                             choices = c("New Books - Fiction" = "New_Books_Fiction",
-                                         "New Books - Non-fiction" = "New_Books_Non-Fiction",
-                                         "Regular Books - Fiction" = "Regular_Books_Fiction",
-                                         "Regular Books - Non-fiction" = "Regular_Books_Non-Fiction", 
-                                         "New Audiobooks - Fiction" = "New_Audiobooks_Fiction",
-                                         "New Audiobooks - Non-fiction" = "New_Audiobooks_Non-Fiction",
-                                         "Regular Audiobooks - Fiction" = "Regular_Audiobook_Fiction",
-                                         "Regular Audiobooks - Non-fiction" = "Regular_Audiobooks_Non-Fiction",
-                                         "New Digital Audio Books" = "New_Digital_Audio_Books_Fiction",
-                                         "Regular Digital Audio Books" = "Regular_Digital_Audio_Books_Fiction", 
-                                         "New DVDs - Fiction" = "New_DVDs-Fiction",
-                                         "New DVDs - Non-fiction" = "New_DVDs_Non-Fiction",
-                                         "Regular DVDs - Fiction" = "Regular_DVDs_Fiction", 
-                                         "Regular DVDs - Non-fiction" = "Regular_DVDs_Non-Fiction", 
-                                         "New Periodicals - Fiction" = "New_Periodicals_Fiction",
-                                         "New Periodicals - Non-fiction" = "New_Periodicals_Non-Fiction", 
-                                         "Regular Periodicals - Fiction" = "Regular_Periodicals_Fiction", 
-                                         "Regular Periodicals - Non-fiction" = "Regular_Periodicals_Non-Fiction",
-                                         "New Music" = "New_Music_Fiction", 
-                                         "Regular Music" = "Regular_Music_Fiction",
-                                         "New Software" = "New_Software_Fiction", 
-                                         "Regular Software" = "Regular_Software_Fiction", 
-                                         "New Videogames" = "New_Videogames_Fiction", 
-                                         "Regular Videogames" = "Regular_Videogames_Fiction")),
+                             choices = c("Books - Fiction" = "Books_Fiction",
+                                         "Books - Non-fiction" = "Books_Non-Fiction",
+                                         "Audiobooks" = "Audiobooks",
+                                         "Digital Audiobooks" = "Digital_Audiobooks", 
+                                         "DVDs - Fiction" = "DVDs-Fiction",
+                                         "DVDs - Non-fiction" = "DVDs_Non-Fiction", 
+                                         "Periodicals - Fiction" = "Periodicals_Fiction",
+                                         "Periodicals - Non-fiction" = "Periodicals_Non-Fiction", 
+                                         "Music" = "Music", 
+                                         "Software" = "New_Software", 
+                                         "Videogames" = "Videogames" )),
+                 checkboxInput("LoanPerNew", "New to collection?"),
                  br(), br(), br(), br(), br(), br(), br(), br(), br(),  
                  plotOutput("LoanPerHist")
                ),
@@ -111,7 +91,30 @@ shinyUI(
              )
              
              ),
-    
+    tabPanel("Fines", 
+             sidebarLayout(
+               sidebarPanel(
+                 selectInput("FineType", "Select a material type:",
+                             choices = c("Books",# = "Books_",
+                                         "New Books",# = "NewBooks_", 
+                                         "Audiobooks",# = "Audiobooks_",
+                                         "DVDs",# = "DVDs_",
+                                         "Periodicals",# = "Periodicals_",
+                                         "Music",# = "Music_",
+                                         "Software",# = "Software_",
+                                         "Videogames")),# = "Videogames_")),
+                 checkboxInput("FinePerson", "Adult or Juvenile", value = TRUE),
+                 checkboxInput("FineMax", "Daily or Max", value = TRUE),
+                 br(), br(), br(), br(), br(), br(), br(), br(), br(),  
+                 plotOutput("FineHist")
+               ),
+               
+               mainPanel(
+                 plotOutput("FinePlot")
+               )
+             )
+             
+    ),    
     
             tabPanel("Salary Info",
              sidebarLayout(

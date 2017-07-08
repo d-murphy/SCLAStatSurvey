@@ -59,6 +59,7 @@ shinyUI(
                ),
                
                mainPanel(
+                 p("Staff Counts"),
                  plotOutput("StaffCtPlot")
                )
              )
@@ -121,15 +122,27 @@ shinyUI(
                sidebarPanel(
                  
                  selectInput("SalInfo", "Select a statistic:", 
-                             choices = c("Clerk Salary" = "ClerkSal",
-                                         "Senior Clerk Salary" = "SenClerkSal",
-                                         "Librarian Trainee Salary" = "LibTraineeSal",
-                                         "Librarian I Salary" = "LibISal",
-                                         "Librarian II Salary" = "LibIISal",
-                                         "Librarian III Salary" = "LibIIISal",
-                                         "Librarian IV Salary" = "LibIVSal",
-                                         "Library Director Salary" = "LibDirSal"
+                             choices = c("Page" = "Page",
+                                         "Clerk" = "Clerk",
+                                         "Senior Clerk" = "Senior_Clerk",
+                                         "Principal Clerk" = "Principal_Clerk",
+                                         "Circulation Supervisor" = "Circulation Supervisor",
+                                         "Librarian Trainee" = "Library_Trainee",
+                                         "Librarian I" = "Librarian_I",
+                                         "Librarian II" = "Librarian_II",
+                                         "Librarian III" = "Librarian_III",
+                                         "Librarian IV" = "Librarian_IV",
+                                         "Assistant Director" = "Assistant_Director",
+                                         "Library Director" = "Library_Director",
+                                         "Administrative Assistant" = "Administrative_Assistant",
+                                         "Security Guard" = "Security_Gaurd",
+                                         "Custodial Worker I" = "Custodial_Worker_I",
+                                         "Custodial Worker II" = "Custodial_Worker_II",
+                                         "Custodial Worker III" = "Custodial_Worker_III",
+                                         "Head Custodian" = "Head_Custodian"
                                          )),
+                 
+                 checkboxInput("StaffCtFT", "FT or PT", value = TRUE),
                  br(), br(), br(), br(), br(), br(), br(), br(),  
                  p("Reds used to collect the lower ends of each range.  Greens collect the highs."),
                  plotOutput("SalInfoHist")

@@ -52,7 +52,21 @@ shinyServer(function(input, output) {
           )
   })
   
+  SalColAxisNameLow <- reactive({
+    
+    paste0(
+      "MinSal_", input$SalInfo, 
+      if(input$SalInfoFT){"_FT"} else {"_PT"} 
+    )
+  })
   
+  SalColAxisNameHigh <- reactive({
+    
+    paste0(
+      "MaxSal_", input$SalInfo, 
+      if(input$SalInfoFT){"_FT"} else {"_PT"} 
+    )
+  })
   
   
   
@@ -85,6 +99,11 @@ shinyServer(function(input, output) {
 
   geom_segPlotFunc <- function(LowSal, HighSal){
     
+    if(LowSal == "MinSal_Librarian IV_PT"){p("test")}
+    
+    axisTitle <- substring(LowSal, regexpr("_", LowSal)[1]+1) 
+    axisTitle <- gsub("_"," ", axisTitle)
+    
       #if Sal
     
       ggplot(aes(x = LibData[[LowSal]], y=LibraryName, xend = LibData[[HighSal]], yend = LibraryName),
@@ -92,9 +111,9 @@ shinyServer(function(input, output) {
       geom_segment() +
       geom_point(aes(x = LibData[[LowSal]])) + 
       geom_point(aes(x = LibData[[HighSal]])) +
-      labs(x = LibSalxAxisName, 
+      labs(x = axisTitle, 
            y = "Library Name") + 
-      scale_x_continuous(limits = c(20000,160000))+
+#      scale_x_continuous(limits = c(20000,160000))+
       theme_hc()  + 
       ggtitle("") + 
       scale_x_continuous(breaks = pretty_breaks())
@@ -103,36 +122,6 @@ shinyServer(function(input, output) {
   
   }
 
-  LibSalPlotFunc <- function(col){
-
-    LibSalxAxisName <- switch(input$SalInfo, 
-                        "LibIIISal" = "Librarian III Salary", 
-                        "LibISal" = "Librarian I Salary",
-                        "LibTraineeSal" = "Librarian Trainee Salary",
-                        "LibIISal" = "Librarian II Salary",
-                        "LibIVSal" = "Librarian IV Salary",
-                        "ClerkSal" = "Cleark Salary",
-                        "SenClerkSal" = "Senior Clerk Salary",
-                        "LibDirSal" = "Library Director Salary")
-   
-    
-   
-    LibSalLow <- paste0(input$SalInfo,"Low")
-    LibSalHigh <- paste0(input$SalInfo, "High")
-    
-    ggplot(aes(x = LibData[[LibSalLow]], y=LibraryName, xend = LibData[[LibSalHigh]], yend = LibraryName),
-           data = LibData) + 
-      geom_segment() +
-      geom_point(aes(x = LibData[[LibSalLow]])) + 
-      geom_point(aes(x = LibData[[LibSalHigh]])) +
-      labs(x = LibSalxAxisName, 
-           y = "Library Name") + 
-      scale_x_continuous(limits = c(20000,160000))+
-      theme_hc()  + 
-      ggtitle("") + 
-      scale_x_continuous(breaks = pretty_breaks())
-  }
-  
   LibSalHistFunc <- function(col){
     
     LibSalxAxisName <- switch(input$SalInfo, 
@@ -213,7 +202,7 @@ shinyServer(function(input, output) {
                   
     output$SalInfoPlot <- renderPlot({
     
-      LibSalPlotFunc(input$SalInfo)
+      geom_segPlotFunc(SalColAxisNameLow(), SalColAxisNameHigh())
       
     }, height = 650)
     

@@ -22,8 +22,7 @@ shinyUI(
                                   "Meeting Room Capacity" = "Info_Meeting_Room_Capacity", 
                                   "Yearly Open Hours" = "Info_Yearly_Open_Hours",
                                   "Weekly Hours" = "Info_Weekly_Open_Hours",
-                                  "Year Established" = "Info_Year_Established
-"
+                                  "Year Established" = "Info_Year_Established"
                                   )), 
                   
                   br(), br(), br(), br(), br(),br(),br(),br(),br(),
@@ -54,12 +53,12 @@ shinyUI(
                                          
                              )),
                  checkboxInput("StaffCtFT", "FT or PT", value = TRUE),
-                 br(), br(), br(), br(), br(), br(), br(), br(), br(),  
+                 br(), br(), br(), br(), br(), br(), br(), br(),  
                  plotOutput("StaffCtHist")
                ),
                
                mainPanel(
-                 p("Staff Counts"),
+                 p("Staff Counts", align = "center"),
                  plotOutput("StaffCtPlot")
                )
              )
@@ -79,14 +78,15 @@ shinyUI(
                                          "Periodicals - Fiction" = "Periodicals_Fiction",
                                          "Periodicals - Non-fiction" = "Periodicals_Non-Fiction", 
                                          "Music" = "Music", 
-                                         "Software" = "New_Software", 
+                                         "Software" = "Software", 
                                          "Videogames" = "Videogames" )),
                  checkboxInput("LoanPerNew", "New to collection?"),
-                 br(), br(), br(), br(), br(), br(), br(), br(), br(),  
+                 br(), br(), br(), br(), br(), br(), br(), br(),  
                  plotOutput("LoanPerHist")
                ),
                
                mainPanel(
+                 p("Loan Period (Days)", align = "center"),
                  plotOutput("LoanPerPlot")
                )
              )
@@ -96,21 +96,22 @@ shinyUI(
              sidebarLayout(
                sidebarPanel(
                  selectInput("FineType", "Select a material type:",
-                             choices = c("Books",# = "Books_",
-                                         "New Books",# = "NewBooks_", 
-                                         "Audiobooks",# = "Audiobooks_",
-                                         "DVDs",# = "DVDs_",
-                                         "Periodicals",# = "Periodicals_",
-                                         "Music",# = "Music_",
-                                         "Software",# = "Software_",
-                                         "Videogames")),# = "Videogames_")),
+                             choices = c("Books",# = "Books",
+                                         "New Books",# = "NewBooks", 
+                                         "Audiobooks",# = "Audiobooks",
+                                         "DVDs",# = "DVDs",
+                                         "Periodicals",# = "Periodicals",
+                                         "Music",# = "Music",
+                                         "Software",# = "Software",
+                                         "Videogames")),# = "Videogames")),
                  checkboxInput("FinePerson", "Adult or Juvenile", value = TRUE),
                  checkboxInput("FineMax", "Daily or Max", value = TRUE),
-                 br(), br(), br(), br(), br(), br(), br(), br(), br(),  
+                 br(), br(), br(), br(), br(), br(),  
                  plotOutput("FineHist")
                ),
                
                mainPanel(
+                 p("Fine Amount (Dollars)", align = "center"),
                  plotOutput("FinePlot")
                )
              )
@@ -122,33 +123,34 @@ shinyUI(
                sidebarPanel(
                  
                  selectInput("SalInfo", "Select a statistic:", 
-                             choices = c("Page" = "Page",
-                                         "Clerk" = "Clerk",
-                                         "Senior Clerk" = "Senior_Clerk",
-                                         "Principal Clerk" = "Principal_Clerk",
-                                         "Circulation Supervisor" = "Circulation Supervisor",
-                                         "Librarian Trainee" = "Library_Trainee",
-                                         "Librarian I" = "Librarian_I",
-                                         "Librarian II" = "Librarian_II",
-                                         "Librarian III" = "Librarian_III",
-                                         "Librarian IV" = "Librarian_IV",
-                                         "Assistant Director" = "Assistant_Director",
-                                         "Library Director" = "Library_Director",
-                                         "Administrative Assistant" = "Administrative_Assistant",
-                                         "Security Guard" = "Security_Gaurd",
-                                         "Custodial Worker I" = "Custodial_Worker_I",
-                                         "Custodial Worker II" = "Custodial_Worker_II",
-                                         "Custodial Worker III" = "Custodial_Worker_III",
-                                         "Head Custodian" = "Head_Custodian"
+                             choices = c("Page",
+                                         "Clerk",
+                                         "Senior Clerk",
+                                         "Principal Clerk",
+                                         "Circulation Supervisor",
+                                         "Librarian Trainee",
+                                         "Librarian I",
+                                         "Librarian II",
+                                         "Librarian III",
+                                         "Librarian IV",
+                                         "Assistant Director",
+                                         "Library Director",
+                                         "Administrative Assistant",
+                                         "Security Guard",
+                                         "Custodial Worker I",
+                                         "Custodial Worker II",
+                                         "Custodial Worker III",
+                                         "Head Custodian"
                                          )),
                  
-                 checkboxInput("StaffCtFT", "FT or PT", value = TRUE),
+                 checkboxInput("SalInfoFT", "FT or PT", value = TRUE),
                  br(), br(), br(), br(), br(), br(), br(), br(),  
                  p("Reds used to collect the lower ends of each range.  Greens collect the highs."),
                  plotOutput("SalInfoHist")
                ),
                
                mainPanel(
+                 p("Compensation Range (Dollars)", align = "center"),
                  plotOutput("SalInfoPlot")
                )
              )

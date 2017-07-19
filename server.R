@@ -56,7 +56,19 @@ shinyServer(function(input, output) {
     
     paste0(
       "MinSal_", input$SalInfo, 
-      if(input$SalInfoFT){"_FT"} else {"_PT"} 
+      if(input$SalInfo %in% c("Page", "Security Guard"))
+        {"_PT"}
+      else if(input$SalInfo %in% 
+                  c("Library Director", "Assistant Director",
+                    "Administrative Assistant","Custodial Worker II",
+                    "Custodial Worker III", "Head Custodian",
+                    "Circulation Supervisor", "Principal Clerk",
+                    "Librarian IV"))
+        {"_FT"}
+      else if(input$SalInfoFT)
+        {"_FT"} 
+      else 
+        {"_PT"} 
     )
   })
   
@@ -64,7 +76,19 @@ shinyServer(function(input, output) {
     
     paste0(
       "MaxSal_", input$SalInfo, 
-      if(input$SalInfoFT){"_FT"} else {"_PT"} 
+      if(input$SalInfo %in% c("Page", "Security Guard"))
+      {"_PT"}
+      else if(input$SalInfo %in% 
+              c("Library Director", "Assistant Director",
+                "Administrative Assistant","Custodial Worker II",
+                "Custodial Worker III", "Head Custodian",
+                "Circulation Supervisor", "Principal Clerk",
+                "Librarian IV"))
+      {"_FT"}
+      else if(input$SalInfoFT)
+      {"_FT"} 
+      else 
+      {"_PT"} 
     )
   })
   
@@ -98,13 +122,11 @@ shinyServer(function(input, output) {
   }
 
   geom_segPlotFunc <- function(LowSal, HighSal){
+
     
-    if(LowSal == "MinSal_Librarian IV_PT"){p("test")}
-    
+        
     axisTitle <- substring(LowSal, regexpr("_", LowSal)[1]+1) 
     axisTitle <- gsub("_"," ", axisTitle)
-    
-      #if Sal
     
       ggplot(aes(x = LibData[[LowSal]], y=LibraryName, xend = LibData[[HighSal]], yend = LibraryName),
            data = LibData) + 
@@ -113,40 +135,14 @@ shinyServer(function(input, output) {
       geom_point(aes(x = LibData[[HighSal]])) +
       labs(x = axisTitle, 
            y = "Library Name") + 
-#      scale_x_continuous(limits = c(20000,160000))+
       theme_hc()  + 
       ggtitle("") + 
       scale_x_continuous(breaks = pretty_breaks())
     
-      #if wage
-  
+
   }
 
-  LibSalHistFunc <- function(col){
-    
-    LibSalxAxisName <- switch(input$SalInfo, 
-                              "LibIIISal" = "Librarian III Salary", 
-                              "LibISal" = "Librarian I Salary",
-                              "LibTraineeSal" = "Librarian Trainee Salary",
-                              "LibIISal" = "Librarian II Salary",
-                              "LibIVSal" = "Librarian IV Salary",
-                              "ClerkSal" = "Cleark Salary",
-                              "SenClerkSal" = "Senior Clerk Salary",
-                              "LibDirSal" = "Library Director Salary")
-    
 
-    LibSalLow <- paste0(input$SalInfo,"Low")
-    LibSalHigh <- paste0(input$SalInfo, "High")
-    
-    ggplot(data = LibData) +
-      geom_histogram(aes(x = LibData[[LibSalLow]]) , fill = "dark red", alpha = .5, bins = 15) +
-      geom_histogram(aes(x = LibData[[LibSalHigh]]), fill = "dark green", alpha = .5, bins = 15) + 
-      labs(x = LibSalxAxisName, 
-           y = "# of Libraries")  + 
-      scale_x_continuous(limits = c(20000,160000)) +
-      theme_hc() 
-  }
-  
     output$LibInfoPlot <- renderPlot({
     
       geom_pointPlotFunc(LibInfoAxisName())

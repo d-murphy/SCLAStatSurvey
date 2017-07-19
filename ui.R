@@ -142,8 +142,18 @@ shinyUI(
                                          "Custodial Worker III",
                                          "Head Custodian"
                                          )),
+                conditionalPanel( 
+                  condition = "input.SalInfo == 'Librarian Trainee' ||
+                               input.SalInfo == 'Librarian I' ||
+                               input.SalInfo == 'Librarian II' ||
+                               input.SalInfo == 'Librarian III' ||
+                               input.SalInfo == 'Custodial Worker I' ||
+                               input.SalInfo == 'Clerk' ||
+                               input.SalInfo == 'Senior Clerk'", 
+                  checkboxInput("SalInfoFT", "FT or PT", value = TRUE)
+                  ),
+          
                  
-                 checkboxInput("SalInfoFT", "FT or PT", value = TRUE),
                  br(), br(), br(), br(), br(), br(), br(), br(),  
                  p("Reds used to collect the lower ends of each range.  Greens collect the highs."),
                  plotOutput("SalInfoHist")

@@ -1,12 +1,4 @@
 
-# redo - put all drop down list is the form: "New Books" = "New_Books", then use string replace to do axis names
-# where putting in options, reactive functions will be necessary.  example below. 
-# find where functions can overlap - maybe only salary functions need new function.  
-# call function with column name and place in different outputs
-
-
-
-
 
 library(shiny)
 library(readxl)
@@ -20,8 +12,12 @@ LibData <- LibData[1:29,]
 
 shinyServer(function(input, output) {
 
-  LibInfoAxisName <- reactive({
+
+  # First sent of functions takes UI input and converts to proper column name  
   
+  
+  LibInfoAxisName <- reactive({
+    
     paste0(input$LibInfo)
   
   })
@@ -92,7 +88,7 @@ shinyServer(function(input, output) {
     )
   })
   
-  
+  # 4 functions needed.  2 geom_points (1 for single points and 1 for range) and 2 geom_hists(same justification)
   
   geom_pointPlotFunc <- function(col){
     
@@ -104,7 +100,7 @@ shinyServer(function(input, output) {
       labs(x =  axisTitle, 
            y = "Library Name")  +
       theme_hc() + 
-      scale_x_continuous(breaks = pretty_breaks())
+      scale_x_continuous(breaks = pretty_breaks(), labels = scales::comma)
   }
   
   geom_histPlotFunc <- function(col){
@@ -117,7 +113,7 @@ shinyServer(function(input, output) {
         labs(x = axisTitle, 
              y = "# of Libraries") +
         theme_hc() + 
-        scale_x_continuous(breaks = pretty_breaks())
+        scale_x_continuous(breaks = pretty_breaks(), labels = scales::comma)
     
   }
 
@@ -137,12 +133,39 @@ shinyServer(function(input, output) {
            y = "Library Name") + 
       theme_hc()  + 
       ggtitle("") + 
-      scale_x_continuous(breaks = pretty_breaks())
+      scale_x_continuous(breaks = pretty_breaks(), labels = scales::comma)
     
 
   }
 
+  geom_histRangePlotFunc <- function(LowSal, HighSal){
+    
+    axisTitle <- substring(LowSal, regexpr("_", LowSal)[1]+1) 
+    axisTitle <- gsub("_"," ", axisTitle)
+    
+    ggplot(data = LibData) +
+      geom_histogram(aes(x = LibData[[LowSal]]), fill = "dark red", alpha = .5, bins = 15) + 
+      geom_histogram(aes(x = LibData[[HighSal]]), fill = "dark green", alpha = .5, bins = 15) +
+      labs(x = axisTitle, 
+           y = "# of Libraries") +
+      theme_hc() + 
+      scale_x_continuous(breaks = pretty_breaks(), labels = scales::comma)
+    
+  }
+  
+    # Lib Info tab needs reactive graph titles.  Other tabs use Axis Name.  
+  
+    output$LibInfoTitle <- renderText({
+      
+      chartTitle <- LibInfoAxisName()
+      chartTitle <- substring(chartTitle, regexpr("_", chartTitle)[1]+1) 
+      chartTitle <- gsub("_"," ", chartTitle)
+      chartTitle
+      })
 
+    # call column name with correct geom function to create outputs
+    
+        
     output$LibInfoPlot <- renderPlot({
     
       geom_pointPlotFunc(LibInfoAxisName())
@@ -204,7 +227,7 @@ shinyServer(function(input, output) {
     
     output$SalInfoHist <- renderPlot({
       
-      LibSalHistFunc(input$SalInfo)
+      geom_histRangePlotFunc(SalColAxisNameLow(), SalColAxisNameHigh())
       
     })
     

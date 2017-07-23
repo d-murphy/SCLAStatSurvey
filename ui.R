@@ -1,9 +1,4 @@
 
-# This is the user-interface definition of a Shiny web application.
-# You can find out more about building applications with Shiny here:
-#
-# http://shiny.rstudio.com
-#
 
 library(shiny)
 library(shinythemes)
@@ -30,6 +25,7 @@ shinyUI(
                           ),
 
                 mainPanel(
+                  h5(textOutput("LibInfoTitle"), align = "center"),
                   plotOutput("LibInfoPlot")
                   )
               )
@@ -58,7 +54,7 @@ shinyUI(
                ),
                
                mainPanel(
-                 p("Staff Counts", align = "center"),
+                 h5("Staff Counts", align = "center"),
                  plotOutput("StaffCtPlot")
                )
              )
@@ -86,7 +82,7 @@ shinyUI(
                ),
                
                mainPanel(
-                 p("Loan Period (Days)", align = "center"),
+                 h5("Loan Period (Days)", align = "center"),
                  plotOutput("LoanPerPlot")
                )
              )
@@ -111,7 +107,7 @@ shinyUI(
                ),
                
                mainPanel(
-                 p("Fine Amount (Dollars)", align = "center"),
+                 h5("Fine Amount (Dollars)", align = "center"),
                  plotOutput("FinePlot")
                )
              )
@@ -155,12 +151,12 @@ shinyUI(
           
                  
                  br(), br(), br(), br(), br(), br(), br(), br(),  
-                 p("Reds used to collect the lower ends of each range.  Greens collect the highs."),
+                 p("Red used to collect the lower ends of each salary range.  Green collects the highs.  Dark Green shows overlap"),
                  plotOutput("SalInfoHist")
                ),
                
                mainPanel(
-                 p("Compensation Range (Dollars)", align = "center"),
+                 h5("Compensation Range (Dollars)", align = "center"),
                  plotOutput("SalInfoPlot")
                )
              )

@@ -9,6 +9,7 @@ library(scales)
 
 LibData <- read_excel("SCLASurvey.xlsx")
 LibData <- LibData[1:29,]
+#LibData <- LibData %>% arrange(desc(LibraryName))
 
 shinyServer(function(input, output) {
 
@@ -95,12 +96,14 @@ shinyServer(function(input, output) {
     axisTitle <- substring(col, regexpr("_", col)[1]+1) 
     axisTitle <- gsub("_"," ", axisTitle)
 
-    ggplot(aes(x = LibData[[col]], y=LibraryName), data = LibData) +
-      geom_point() + 
+    ggplot(aes(x = reorder(LibraryName,-LibData[[col]]), y=LibData[[col]]), data = LibData) +
+      geom_bar(stat = "identity", fill = "#6bb1ea") + 
       labs(x =  axisTitle, 
            y = "Library Name")  +
-      theme_hc() + 
-      scale_x_continuous(breaks = pretty_breaks(), labels = scales::comma)
+      theme_pander() + 
+      coord_flip() + 
+      geom_text(label = LibData[[col]], hjust=-0.1) +
+      scale_y_continuous(limits = c(0,NA),breaks = pretty_breaks(), labels = scales::comma)
   }
   
   geom_histPlotFunc <- function(col){
@@ -109,11 +112,14 @@ shinyServer(function(input, output) {
     axisTitle <- gsub("_"," ", axisTitle)
     
       ggplot(aes(x = LibData[[col]]), data = LibData) +
-        geom_histogram(fill = "dark green", alpha = .5, bins = 15) + 
+        geom_density(fill = "dark green", alpha = .5) + 
         labs(x = axisTitle, 
              y = "# of Libraries") +
-        theme_hc() + 
-        scale_x_continuous(breaks = pretty_breaks(), labels = scales::comma)
+        theme_pander() + 
+        scale_x_continuous(limits = c(0,NA), breaks = pretty_breaks(), labels = scales::comma) + 
+        theme(axis.title.y=element_blank(),
+              axis.text.y = element_blank(),
+              axis.ticks.y = element_blank())
     
   }
 
@@ -131,9 +137,9 @@ shinyServer(function(input, output) {
       geom_point(aes(x = LibData[[HighSal]])) +
       labs(x = axisTitle, 
            y = "Library Name") + 
-      theme_hc()  + 
+      theme_pander()  + 
       ggtitle("") + 
-      scale_x_continuous(breaks = pretty_breaks(), labels = scales::comma)
+      scale_x_continuous(limits = c(0,NA),breaks = pretty_breaks(), labels = scales::comma)
     
 
   }
@@ -144,12 +150,15 @@ shinyServer(function(input, output) {
     axisTitle <- gsub("_"," ", axisTitle)
     
     ggplot(data = LibData) +
-      geom_histogram(aes(x = LibData[[LowSal]]), fill = "dark red", alpha = .5, bins = 15) + 
-      geom_histogram(aes(x = LibData[[HighSal]]), fill = "dark green", alpha = .5, bins = 15) +
+      geom_density(aes(x = LibData[[LowSal]]), fill = "dark red", alpha = .5) + 
+      geom_density(aes(x = LibData[[HighSal]]), fill = "dark green", alpha = .5) +
       labs(x = axisTitle, 
            y = "# of Libraries") +
-      theme_hc() + 
-      scale_x_continuous(breaks = pretty_breaks(), labels = scales::comma)
+      theme_pander() + 
+      scale_x_continuous(limits = c(0,NA), breaks = pretty_breaks(), labels = scales::comma)+ 
+      theme(axis.title.y=element_blank(),
+            axis.text.y = element_blank(),
+            axis.ticks.y = element_blank())
     
   }
   

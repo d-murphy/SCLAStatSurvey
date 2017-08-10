@@ -49,8 +49,10 @@ shinyUI(
                                          "Security" = "Security"
                                          
                              )),
-                 checkboxInput("StaffCtFT", "FT or PT", value = TRUE),
-                 br(), br(), br(), br(), br(), br(), br(), 
+                 radioButtons("StaffCtFT", "FT or PT:",
+                              choices = list("FT", "PT"),
+                              selected = "FT"),
+                 br(), br(), br(), br(), 
                  h5("Trend Analysis", align = "center"),  
                  plotOutput("StaffCtHist")
                ),
@@ -78,8 +80,11 @@ shinyUI(
                                          "Music" = "Music", 
                                          "Software" = "Software", 
                                          "Videogames" = "Videogames" )),
-                 checkboxInput("LoanPerNew", "New to collection?"),
-                 br(), br(), br(), br(), br(), br(), br(), 
+                 radioButtons("LoanPerNew", "Item Age:",
+                              choices = list("Regular" = "Regular", "New to Collection" = "New"),
+                              selected = "Regular"),
+                 
+                 br(), br(), br(), br(), 
                  h5("Trend Analysis", align = "center"),
                  plotOutput("LoanPerHist")
                ),
@@ -103,9 +108,13 @@ shinyUI(
                                          "Music",# = "Music",
                                          "Software",# = "Software",
                                          "Videogames")),# = "Videogames")),
-                 checkboxInput("FinePerson", "Adult or Juvenile", value = TRUE),
-                 checkboxInput("FineMax", "Daily or Max", value = TRUE),
-                 br(), br(), br(), br(), br(), 
+                 radioButtons("FinePerson", "Fine type:",
+                              choices = list("Adult", "Juvenile"),
+                              selected = "Adult"),
+                 radioButtons("FineMax", "Fine period:", 
+                               choices = list("Daily", "Max"),
+                               selected = "Daily"),
+                  
                  h5("Trend Analysis", align = "center"),
                  plotOutput("FineHist")
                ),

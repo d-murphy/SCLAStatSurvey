@@ -25,27 +25,22 @@ shinyServer(function(input, output) {
   
   StaffCtAxisName <- reactive({
   
-    paste0("StaffCt_",input$StaffCt,
-            if(input$StaffCtFT){"_FT"} else {"_PT"}
-           )
+    paste0("StaffCt_",input$StaffCt,"_",input$StaffCtFT)
   
   })
 
   LoanPerAxisName <- reactive({
     
-    paste0("LoanPer_", 
-           if(input$LoanPerNew){"New_"} else {"Regular_"},
-           input$LoanPer
-           )
+    paste0("LoanPer_", input$LoanPerNew, "_", input$LoanPer )
     
   })  
   
   FineColAxisName <- reactive({
     
     paste0(
-      "Fine_", input$FineType, 
-      if(input$FinePerson){"_Adult"} else {"_Juvenile"}, 
-      if(input$FineMax){"_Max"} else {"_Daily"} 
+      "Fine_", input$FineType,
+      "_",input$FinePerson,
+      "_",input$FineMax 
           )
   })
   

@@ -159,13 +159,18 @@ shinyUI(
                                input.SalInfo == 'Custodial Worker I' ||
                                input.SalInfo == 'Clerk' ||
                                input.SalInfo == 'Senior Clerk'", 
-                  checkboxInput("SalInfoFT", "FT or PT", value = TRUE)
-                  ),
+                  radioButtons("SalInfoFT", "FT or PT", 
+                               choices = list("FT", "PT"),
+                               selected = "FT")),
+                radioButtons("SalInfoLowHigh", "Range End:",
+                             choices = list("Low" = "MinSal_","High" = "MaxSal_"),
+                             selected = "High"),
+                  
+                  
           
                  
-                 br(), br(), br(), br(), br(), br(), br(), 
+                br(), 
                 h5("Trend Analysis", align = "center"),
-                 p("Red used to collect the lower ends of each salary range.  Green collects the highs.  Dark Green shows overlap"),
                  plotOutput("SalInfoHist")
                ),
                

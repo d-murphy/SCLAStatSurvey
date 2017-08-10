@@ -44,45 +44,64 @@ shinyServer(function(input, output) {
           )
   })
   
-  SalColAxisNameLow <- reactive({
+  SalColAxisName <- reactive({
     
-    paste0(
-      "MinSal_", input$SalInfo, 
-      if(input$SalInfo %in% c("Page", "Security Guard"))
-        {"_PT"}
-      else if(input$SalInfo %in% 
-                  c("Library Director", "Assistant Director",
-                    "Administrative Assistant","Custodial Worker II",
-                    "Custodial Worker III", "Head Custodian",
-                    "Circulation Supervisor", "Principal Clerk",
-                    "Librarian IV"))
-        {"_FT"}
-      else if(input$SalInfoFT)
-        {"_FT"} 
-      else 
-        {"_PT"} 
-    )
+    paste0(input$SalInfoLowHigh, input$SalInfo, 
+          if(input$SalInfo %in% c("Page", "Security Guard"))
+            {"_PT"}
+          else if(input$SalInfo %in% 
+                      c("Library Director", "Assistant Director",
+                        "Administrative Assistant","Custodial Worker II",
+                        "Custodial Worker III", "Head Custodian",
+                        "Circulation Supervisor", "Principal Clerk",
+                        "Librarian IV"))
+            {"_FT"}
+          else if(input$SalInfoFT == "FT")
+            {"_FT"} 
+          else 
+          {"_PT"} 
+        )
   })
   
-  SalColAxisNameHigh <- reactive({
-    
-    paste0(
-      "MaxSal_", input$SalInfo, 
-      if(input$SalInfo %in% c("Page", "Security Guard"))
-      {"_PT"}
-      else if(input$SalInfo %in% 
-              c("Library Director", "Assistant Director",
-                "Administrative Assistant","Custodial Worker II",
-                "Custodial Worker III", "Head Custodian",
-                "Circulation Supervisor", "Principal Clerk",
-                "Librarian IV"))
-      {"_FT"}
-      else if(input$SalInfoFT)
-      {"_FT"} 
-      else 
-      {"_PT"} 
-    )
-  })
+#   SalColAxisNameLow <- reactive({
+#     
+#     paste0(
+#       "MinSal_", input$SalInfo, 
+#       if(input$SalInfo %in% c("Page", "Security Guard"))
+#         {"_PT"}
+#       else if(input$SalInfo %in% 
+#                   c("Library Director", "Assistant Director",
+#                     "Administrative Assistant","Custodial Worker II",
+#                     "Custodial Worker III", "Head Custodian",
+#                     "Circulation Supervisor", "Principal Clerk",
+#                     "Librarian IV"))
+#         {"_FT"}
+#       else if(input$SalInfoFT)
+#         {"_FT"} 
+#       else 
+#         {"_PT"} 
+#     )
+#   })
+#   
+#   SalColAxisNameHigh <- reactive({
+#     
+#     paste0(
+#       "MaxSal_", input$SalInfo, 
+#       if(input$SalInfo %in% c("Page", "Security Guard"))
+#       {"_PT"}
+#       else if(input$SalInfo %in% 
+#               c("Library Director", "Assistant Director",
+#                 "Administrative Assistant","Custodial Worker II",
+#                 "Custodial Worker III", "Head Custodian",
+#                 "Circulation Supervisor", "Principal Clerk",
+#                 "Librarian IV"))
+#       {"_FT"}
+#       else if(input$SalInfoFT)
+#       {"_FT"} 
+#       else 
+#       {"_PT"} 
+#     )
+#   })
   
   # 4 functions needed.  2 geom_points (1 for single points and 1 for range) and 2 geom_hists(same justification)
   
@@ -224,14 +243,18 @@ shinyServer(function(input, output) {
     
                   
     output$SalInfoPlot <- renderPlot({
+      
+      geom_pointPlotFunc(SalColAxisName())
     
-      geom_segPlotFunc(SalColAxisNameLow(), SalColAxisNameHigh())
+      #geom_segPlotFunc(SalColAxisNameLow(), SalColAxisNameHigh())
       
     }, height = 650)
     
     output$SalInfoHist <- renderPlot({
       
-      geom_histRangePlotFunc(SalColAxisNameLow(), SalColAxisNameHigh())
+      geom_histPlotFunc(SalColAxisName())
+      
+      #geom_histRangePlotFunc(SalColAxisNameLow(), SalColAxisNameHigh())
       
     })
     

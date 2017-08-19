@@ -165,11 +165,20 @@ shinyUI(
                 radioButtons("SalInfoLowHigh", "Range End:",
                              choices = list("Low" = "MinSal_","High" = "MaxSal_"),
                              selected = "High"),
-                  
-                  
-          
-                 
-                br(), 
+                conditionalPanel( 
+                  condition = "input.SalInfo == 'Page' ||
+                               input.SalInfo == 'Principal Clerk' ||
+                               input.SalInfo == 'Circulation Supervisor' ||
+                               input.SalInfo == 'Librarian IV' ||
+                               input.SalInfo == 'Assistant Director' ||
+                               input.SalInfo == 'Library Director' ||
+                               input.SalInfo == 'Security Guard' ||
+                               input.SalInfo == 'Custodial Worker II' ||
+                               input.SalInfo == 'Custodial Worker III' ||
+                               input.SalInfo == 'Head Custodian' ||
+                               input.SalInfo == 'Administrative Assistant'", 
+                  br(),br(), br(),br()),  
+                
                 h5("Trend Analysis", align = "center"),
                  plotOutput("SalInfoHist")
                ),
